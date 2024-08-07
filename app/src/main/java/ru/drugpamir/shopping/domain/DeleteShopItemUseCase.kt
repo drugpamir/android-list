@@ -2,11 +2,11 @@ package ru.drugpamir.shopping.domain
 
 class DeleteShopItemUseCase(private val repository: ShopListRepository) {
 
-    fun deleteShopItem(id: Int): Boolean {
-        TODO()
+    fun deleteShopItem(shopItemId: Int): Boolean {
+        return repository.deleteShopItem(shopItemId)
     }
 
     fun deleteShopItem(shopItem: ShopItem): Boolean {
-        return repository.deleteShopItem(shopItem)
+        return deleteShopItem(shopItem.id)
     }
 }

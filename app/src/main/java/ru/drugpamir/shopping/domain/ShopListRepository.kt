@@ -10,5 +10,5 @@ interface ShopListRepository {
 
     fun addShopItem(shopItem: ShopItem): Boolean
 
-    fun deleteShopItem(shopItem: ShopItem): Boolean
+    fun deleteShopItem(shopItemId: Int): Boolean
 }
