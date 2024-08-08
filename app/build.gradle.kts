@@ -20,6 +20,8 @@ android {
         }
     }
 
+//    viewBinding.enable = true
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -52,11 +54,13 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.material)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.material)
     implementation(libs.androidx.constraintlayout)
 
 //    implementation(libs.androidx.lifecycle.runtime.ktx)
+//    implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+//    implementation(libs.androidx.activity.ktx)
 //    implementation(libs.androidx.activity.compose)
 //    implementation(platform(libs.androidx.compose.bom))
 //    implementation(libs.androidx.ui)

@@ -9,6 +9,16 @@ object ShopListRepositoryImpl: ShopListRepository {
 
     private var shopItemIdIncrement = 0
 
+    init {
+        for (i: Int in 1..100) {
+            addShopItem(ShopItem(
+                name = "Item $i",
+                count = 0,
+                enabled = true,
+            ))
+        }
+    }
+
     override fun getShopList(): List<ShopItem> {
         return shopList.toList()
     }
