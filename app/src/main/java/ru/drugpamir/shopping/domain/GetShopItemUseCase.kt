@@ -1,8 +1,10 @@
 package ru.drugpamir.shopping.domain
 
+import androidx.lifecycle.LiveData
+
 class GetShopItemUseCase(private val repository: ShopListRepository){
 
-    fun getShopList(): List<ShopItem> {
+    fun getShopList(): LiveData<List<ShopItem>> {
         return repository.getShopList()
     }
 

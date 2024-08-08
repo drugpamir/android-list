@@ -1,11 +1,14 @@
 package ru.drugpamir.shopping.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ru.drugpamir.shopping.domain.ShopItem
 import ru.drugpamir.shopping.domain.ShopListRepository
 
 object ShopListRepositoryImpl: ShopListRepository {
 
     private val shopList = mutableListOf<ShopItem>()
+    private val shopListLiveData = MutableLiveData<List<ShopItem>>()
 
     private var shopItemIdIncrement = 0
 
@@ -19,8 +22,8 @@ object ShopListRepositoryImpl: ShopListRepository {
         }
     }
 
-    override fun getShopList(): List<ShopItem> {
-        return shopList.toList()
+    override fun getShopList(): LiveData<List<ShopItem>> {
+        return shopListLiveData
     }
 
     override fun getShopItem(shopItemId: Int): ShopItem {
@@ -40,12 +43,20 @@ object ShopListRepositoryImpl: ShopListRepository {
         if (shopItem.id == ShopItem.UNDEFINED_ID) {
             shopItem.id = shopItemIdIncrement++
         }
-        return shopList.add(shopItem)
+        return shopList.add(shopItem).also {
+            updateList()
+        }
     }
 
     override fun deleteShopItem(shopItemId: Int): Boolean {
         return shopList.removeIf {
             it.id == shopItemId
+        }.also {
+            updateList()
         }
+    }
+
+    private fun updateList() {
+        shopListLiveData.value = shopList.toList()
     }
 }
