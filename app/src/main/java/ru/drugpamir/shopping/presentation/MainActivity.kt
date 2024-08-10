@@ -1,38 +1,35 @@
 package ru.drugpamir.shopping.presentation
 
 import android.os.Bundle
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import ru.drugpamir.shopping.R
-import ru.drugpamir.shopping.domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var shopListAdapter: ShopListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setupRecyclerView()
+
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopList.observe(this) {
-            showList(it)
+            shopListAdapter.shopList = it
         }
     }
 
-    private fun showList(list: List<ShopItem>) {
-        val viewGroup = findViewById<LinearLayout>(R.id.ll_shop_list)
-        for (shopItem in list) {
-            val res = if (shopItem.enabled) {
-                R.layout.item_view_enabled
-            } else {
-                R.layout.item_view_enabled
-            }
-            val itemView = layoutInflater.inflate(res, viewGroup, false)
-            itemView.findViewById<TextView>(R.id.tv_name).text = shopItem.name
-            itemView.findViewById<TextView>(R.id.tv_count).text = shopItem.count.toString()
-            viewGroup.addView(itemView)
+    private fun setupRecyclerView() {
+        val rvShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
+        with (rvShopList) {
+            shopListAdapter = ShopListAdapter()
+            adapter = shopListAdapter
+            recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_ITEM_DISABLED, ShopListAdapter.HOLDERS_DISABLED_MAX_COUNT)
+            recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_ITEM_ENABLED, ShopListAdapter.HOLDERS_ENABLED_MAX_COUNT)
         }
     }
 }
