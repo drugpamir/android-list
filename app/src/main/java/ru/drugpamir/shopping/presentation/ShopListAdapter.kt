@@ -3,25 +3,16 @@ package ru.drugpamir.shopping.presentation
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import ru.drugpamir.shopping.R
 import ru.drugpamir.shopping.domain.ShopItem
 
-class ShopListAdapter: RecyclerView.Adapter<ShopItemViewHolder>() {
+class ShopListAdapter: ListAdapter<ShopItem, ShopItemViewHolder>(DiffShopItemCallback()) {
     private var createdViewHoldersCount = 0
 
     var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
-
-    var shopList = listOf<ShopItem>()
-        set(value) {
-            val callback = DiffListItemCallback(shopList, value)
-            val result = DiffUtil.calculateDiff(callback)
-            result.dispatchUpdatesTo(this)
-            field = value
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
         val res = when (viewType) {
@@ -33,13 +24,9 @@ class ShopListAdapter: RecyclerView.Adapter<ShopItemViewHolder>() {
         return ShopItemViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return shopList.size
-    }
-
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
         Log.d("ShopListAdapter", "onCreateViewHolder: ${++createdViewHoldersCount}")
-        val shopItem = shopList[position]
+        val shopItem = getItem(position)
         holder.tvName.text = shopItem.name
         holder.tvCount.text = shopItem.count.toString()
 
@@ -54,7 +41,7 @@ class ShopListAdapter: RecyclerView.Adapter<ShopItemViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        val shopItem = shopList[position]
+        val shopItem = getItem(position)
         return if (shopItem.enabled) {
             VIEW_TYPE_ITEM_ENABLED
         } else {
