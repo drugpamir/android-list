@@ -31,5 +31,8 @@ class MainActivity : AppCompatActivity() {
             recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_ITEM_DISABLED, ShopListAdapter.HOLDERS_DISABLED_MAX_COUNT)
             recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_ITEM_ENABLED, ShopListAdapter.HOLDERS_ENABLED_MAX_COUNT)
         }
+        shopListAdapter.onShopItemLongClickListener = {
+            viewModel.changeEnableState(it)
+        }
     }
 }

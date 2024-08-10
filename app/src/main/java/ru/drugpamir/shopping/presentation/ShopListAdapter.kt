@@ -11,6 +11,8 @@ import ru.drugpamir.shopping.domain.ShopItem
 class ShopListAdapter: RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 //    private var createdViewHoldersCount = 0
 
+    var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
+
     var shopList = listOf<ShopItem>()
         set(value) {
             field = value
@@ -37,6 +39,7 @@ class ShopListAdapter: RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>(
         holder.tvName.text = shopItem.name
         holder.tvCount.text = shopItem.count.toString()
         holder.view.setOnLongClickListener {
+            onShopItemLongClickListener?.invoke(shopItem)
             true
         }
     }
