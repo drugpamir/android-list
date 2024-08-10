@@ -1,6 +1,5 @@
 package ru.drugpamir.shopping.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +7,6 @@ import ru.drugpamir.shopping.R
 import ru.drugpamir.shopping.domain.ShopItem
 
 class ShopListAdapter: ListAdapter<ShopItem, ShopItemViewHolder>(DiffShopItemCallback()) {
-    private var createdViewHoldersCount = 0
 
     var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
@@ -25,7 +23,6 @@ class ShopListAdapter: ListAdapter<ShopItem, ShopItemViewHolder>(DiffShopItemCal
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
-        Log.d("ShopListAdapter", "onCreateViewHolder: ${++createdViewHoldersCount}")
         val shopItem = getItem(position)
         holder.tvName.text = shopItem.name
         holder.tvCount.text = shopItem.count.toString()

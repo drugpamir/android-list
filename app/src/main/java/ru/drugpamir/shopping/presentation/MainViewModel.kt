@@ -1,6 +1,5 @@
 package ru.drugpamir.shopping.presentation
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.drugpamir.shopping.data.ShopListRepositoryImpl
 import ru.drugpamir.shopping.domain.DeleteShopItemUseCase
@@ -18,15 +17,15 @@ class MainViewModel : ViewModel() {
 
     val shopList = getShopItemUseCase.getShopList()
 
+    fun editShopItem(shopItem: ShopItem) {
+        editShopItemUseCase.editShopItem(shopItem)
+    }
+
     fun changeEnableState(shopItem: ShopItem) {
-        if (!editShopItemUseCase.changeEnableState(shopItem)) {
-            return
-        }
+        editShopItemUseCase.changeEnableState(shopItem)
     }
 
     fun deleteShopItem(shopItem: ShopItem) {
-        if (!deleteShopItemUseCase.deleteShopItem(shopItem)) {
-            return
-        }
+        deleteShopItemUseCase.deleteShopItem(shopItem)
     }
 }
