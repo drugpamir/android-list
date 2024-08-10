@@ -11,6 +11,8 @@ import ru.drugpamir.shopping.domain.ShopItem
 class ShopListAdapter: RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 //    private var createdViewHoldersCount = 0
 
+    var onShopItemClickListener: ((ShopItem) -> Unit)? = null
+
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
 
     var shopList = listOf<ShopItem>()
@@ -38,6 +40,11 @@ class ShopListAdapter: RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>(
         val shopItem = shopList[position]
         holder.tvName.text = shopItem.name
         holder.tvCount.text = shopItem.count.toString()
+
+        holder.view.setOnClickListener {
+            onShopItemClickListener?.invoke(shopItem)
+        }
+
         holder.view.setOnLongClickListener {
             onShopItemLongClickListener?.invoke(shopItem)
             true
