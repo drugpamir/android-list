@@ -14,7 +14,7 @@ object ShopListRepositoryImpl: ShopListRepository {
     private var shopItemIdIncrement = 0
 
     init {
-        for (i: Int in 1..10000) {
+        for (i: Int in 1..100) {
             addShopItem(ShopItem(
                 name = "Item $i",
                 count = 0,

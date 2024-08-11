@@ -43,8 +43,8 @@ class ShopItemViewModel : ViewModel() {
         if (isValidInput(name, count)) {
             _shopItem.value?.let {
                 val item = it.copy(
-                    name = it.name,
-                    count = it.count,
+                    name = name,
+                    count = count,
                 )
                 editShopItemUseCase.editShopItem(item)
                 finishWork()
@@ -83,11 +83,11 @@ class ShopItemViewModel : ViewModel() {
     }
 
     private fun isValidInput(name: String, count: Int): Boolean {
-        if (name.isNotBlank()) {
+        if (name.isBlank()) {
             _errorInputName.value = true
             return false
         }
-        if (count > 0) {
+        if (count <= 0) {
             _errorInputCount.value = true
             return false
         }
